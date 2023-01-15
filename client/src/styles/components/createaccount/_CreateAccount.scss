@@ -1,0 +1,63 @@
+.illustration__wrapper {
+  height: 250px;
+  background-color: var(--lightmain);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0px 24px 0px 24px;
+  border-radius: 8px;
+}
+
+.account__form {
+  margin: 16px 24px 16px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 311px;
+
+  button,
+  .input-field {
+    height: 51px;
+    // width: 100%;
+    width: 327px;
+    background-color: var(--borders);
+    border: none;
+    padding: 0px;
+    border-radius: 8px;
+    padding-left: 16px;
+    outline: none;
+    color: black;
+    font-weight: bold;
+    font-size: 16px;
+    &:focus {
+      outline: 3px solid var(--main);
+    }
+  }
+
+  button {
+    width: 327px;
+    background-color: var(--main);
+    font-weight: bold;
+    font-size: 16px;
+    padding: 0px;
+  }
+}
+
+::placeholder {
+  font-size: 16px;
+  font-weight: normal;
+  color: var(--background);
+}
+
+.small__paragraph {
+  margin: 16px 0px 16px 0px;
+  color: var(--main);
+  font-size: 12px;
+  font-weight: bold;
+  text-align: center;
+}
+
+// input:focus::-webkit-input-placeholder {
+//   color: var(--background);
+//   opacity: 0.5;
+// }

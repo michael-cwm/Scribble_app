@@ -1,0 +1,12 @@
+.header__wrapper {
+  margin: 24px 0px 24px 0px;
+  h1 {
+    text-align: center;
+    color: var(--borders);
+    font-family: var(--scribblefont);
+    margin: 0px;
+    span {
+      cursor: pointer;
+    }
+  }
+}

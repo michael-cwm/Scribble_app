@@ -1,0 +1,36 @@
+.image__wrapper {
+  background-color: var(--lightmain);
+  height: 414px;
+  margin: 0px 24px 0px 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+}
+
+.button__wrapper {
+  margin: 16px 24px 16px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  .login__button,
+  .create-account__button {
+    width: 100%;
+    background-color: var(--main);
+    border-radius: 8px;
+    height: 51px;
+    border: none;
+    font-family: var(--textfont);
+    font-weight: bold;
+    font-size: 16px;
+    &:hover {
+      cursor: pointer;
+    }
+    p {
+      text-align: center;
+    }
+  }
+  .login__button {
+    background-color: var(--borders);
+  }
+}

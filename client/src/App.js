@@ -40,9 +40,6 @@ function App() {
     <div className="App">
       {showPhone ? (
         <>
-          <h1 style={{ color: "red" }}>
-            this application is best experienced in mobile view
-          </h1>
           <IphoneFrame>
             <Header />
             <Outlet />

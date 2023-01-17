@@ -1,8 +1,15 @@
 import axios from "axios";
 import e from "express";
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { ChangeEvent, useEffect, useState, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { timeFormatter } from "../../helpers/helpers";
+import { MdSend } from "react-icons/md";
+import { MdKeyboardArrowUp } from "react-icons/md";
+import { MdKeyboardArrowDown } from "react-icons/md";
+import { MdAddCircle } from "react-icons/md";
+import { BsFilterCircleFill } from "react-icons/bs";
+import { CgProfile } from "react-icons/cg";
+
 // import { timeFormatter } from "../../lib/helpers";
 // import TimeForMatter from "../../services/helpers";
 // import { timeFormatter } from "../../lib/helpers";
@@ -24,6 +31,9 @@ const Feed = () => {
   const [scribbles, setScribbles] = useState<IScribble[]>([]);
   const [scribblesUpdated, setScribblesUpdated] = useState<boolean>(false);
   const [scribbleVotes, setScribbleVotes] = useState<number>(0);
+  const [scribblesExist, setScribblesExist] = useState<boolean>(false);
+
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const navigate = useNavigate();
 
@@ -37,6 +47,19 @@ const Feed = () => {
   const handleNewPost = () => {
     setNewPost(true);
   };
+
+  useEffect(() => {
+    if (newPost && inputRef.current) {
+      inputRef.current!.focus();
+    }
+  }, [newPost]);
+
+  // useEffect(() => {
+  //   if (scribbles.length > 0) {
+  //     setScribblesExist(true);
+  //   }
+  //   console.log(scribblesExist);
+  // }, [scribblesUpdated]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -63,6 +86,8 @@ const Feed = () => {
 
       if (response?.data) {
         setScribbles([...scribbles, response.data]);
+        setPostContent("");
+        setNewPost(false);
         // setScribbles((prevScribbles) => [response.data, ...prevScribbles]);
         setScribblesUpdated(!scribblesUpdated);
         console.log(response);
@@ -113,19 +138,8 @@ const Feed = () => {
   // }, []);
 
   const mappedScribbles = scribbles?.map((scribble: IScribble) => {
-    // const posted = timeFormatter(+scribble?.time);
-
     const posted = timeFormatter(+scribble?.time);
 
-    // const posted = TimeForMatter(+scribble.time);
-
-    // const timeInMinutes = Math.floor((Date.now() - +scribble?.time) / 60000);
-
-    // let timeLabel = `${timeInMinutes} m ago`;
-    // if (timeInMinutes > 60) {
-    //   const timeInHours = Math.floor(timeInMinutes / 60);
-    //   timeLabel = `${timeInHours} h ago`;
-    // }
     return (
       <>
         <div className="main-feed__wrapper">
@@ -156,14 +170,14 @@ const Feed = () => {
                 onClick={() => upVote(scribble?._id)}
                 className="vote__button"
               >
-                <img src="/assets/vectorup.png" alt="arrowup" />
+                <MdKeyboardArrowUp />
               </button>
               <p className="vote-counter__paragraph">{scribble?.votes}</p>
               <button
                 onClick={() => downVote(scribble?._id)}
                 className="vote__button"
               >
-                <img src="/assets/vectordown.png" alt="arrowdown" />
+                <MdKeyboardArrowDown />
               </button>
             </div>
           </article>
@@ -175,32 +189,95 @@ const Feed = () => {
 
   return (
     <>
-      <div className="main-feed__wrapper">
+      <div className="main-feed__wrapper" style={{ paddingBottom: "40px" }}>
         <div className="feed-icons__wrapper">
           <div className="add-and-filter__wrapper">
-            <img
-              src="assets/newpost.png"
-              alt="add"
-              className="lolhover"
+            <MdAddCircle
               onClick={handleNewPost}
+              className="icon--styles"
+              style={{ fontSize: "30.5px" }}
             />
-            <img src="assets/filter.png" alt="filter" />
+
+            <BsFilterCircleFill className="icon--styles" />
           </div>
           <div className="profile__wrapper">
-            <img src="/assets/profile.png" alt="profile" />
+            <CgProfile className="icon--styles" />
           </div>
         </div>
         {newPost && (
-          <form onSubmit={(e) => handleSubmit(e)}>
-            <input
-              type="text"
-              // value={}
-              onChange={handleInput}
-              className="input-field"
-            />
-            <input type="submit" value="submit" />
-          </form>
+          <div
+            className="comment__wrapper"
+            style={{
+              borderBottom: "1px solid #585858",
+            }}
+          >
+            <div className="comment__input__wrapper">
+              <div
+                className="profile-pic__wrapper"
+                style={{ maxHeight: "24px" }}
+              >
+                {/* <img
+                src="/assets/coffee.png"
+                alt=""
+                className="profile__img"
+                style={{ maxHeight: "24px" }}
+              /> */}
+              </div>
+              <form
+                action=""
+                onSubmit={(e) => handleSubmit(e)}
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  width: "88%",
+                }}
+              >
+                <input
+                  value={postContent}
+                  type="text"
+                  className="comment__input"
+                  placeholder="spread some love..."
+                  onChange={(e) => handleInput(e)}
+                />
+                {/* <input
+                type="submit"
+                value="send"
+                className="send__button"
+                style={{
+                  marginRight: "16px",
+                  fontWeight: "600",
+                  color: "var(--background)",
+                }}
+              /> */}
+                <button type="submit">
+                  <MdSend />
+                </button>
+              </form>
+            </div>
+          </div>
+          // <form
+          //   onSubmit={(e) => handleSubmit(e)}
+          //   style={{
+          //     margin: "0px 8px 0px 8px",
+          //     display: "flex",
+          //     justifyContent: "space-between",
+          //   }}
+          // >
+          //   <input
+          //     type="text"
+          //     ref={inputRef}
+          //     value={postContent}
+          //     onChange={handleInput}
+          //     className="feed-new-post__input"
+          //     placeholder="write a scribble..."
+          //     style={{ width: "350px" }}
+          //   />
+          //   <button type="submit">
+          //     <MdSend style={{ color: "var(--borders)" }} />
+          //   </button>
+          // </form>
         )}
+
         {mappedScribbles}
       </div>
     </>

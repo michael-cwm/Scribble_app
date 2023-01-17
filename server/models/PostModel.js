@@ -4,7 +4,6 @@ const { Schema, model } = require("mongoose");
 const postSchema = new Schema({
   content: { type: "String", required: true },
   time: { type: "Number", default: Date.now() },
-  // author: { type: Schema.Types.ObjectId, ref: "Users", required: true },
   author: { type: "String", ref: "Users", required: true },
   votes: { type: "Number", default: 0 },
   createdAt: { type: "Date", default: Date.now() },

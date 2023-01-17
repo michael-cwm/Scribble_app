@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { IScribble } from "../../models/IScribble";
 import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
+import { MdSend } from "react-icons/md";
 import { timeFormatter } from "../../helpers/helpers";
 
 const Scribble = () => {
@@ -92,6 +93,7 @@ const Scribble = () => {
       })
       .then((response) => {
         if (response) {
+          setInputFromComment("");
           setScribbleComments(response?.data?.comments);
           setScribbleUpdated(!scribbleUpdated);
         }
@@ -150,74 +152,86 @@ const Scribble = () => {
 
   return (
     <>
-      <div style={{ minHeight: "100%" }} className="relative__wrapper">
-        <div className="feed-icons__wrapper">
-          <div className="icon__wrapper">
-            <MdOutlineKeyboardArrowLeft
-              onClick={() => navigate(-1)}
-              style={{ fontSize: "24px", color: "var(--background)" }}
-            />
-          </div>
-        </div>
-        <article className="feed__article">
-          <div className="alias-and-text__wrapper">
-            <div className="alias__wrapper">
-              <div className="profile-pic__wrapper">
-                <img src="/assets/coffee.png" alt="" className="profile__img" />
-              </div>
-              <span>{scribble?.author}</span>
-              <span className="time__wrapper">{scribbleTime}</span>
-            </div>
-            <div className="text__wrapper">{scribble?.content}</div>
-          </div>
-          <div className="votes__wrapper">
-            <button
-              onClick={() => upVote(scribble?._id)}
-              className="vote__button"
-            >
-              <img src="/assets/vectorup.png" alt="arrowup" />
-            </button>
-            <p className="vote-counter__paragraph">{scribble?.votes}</p>
-            <button
-              onClick={() => downVote(scribble?._id)}
-              className="vote__button"
-            >
-              <img src="/assets/vectordown.png" alt="arrowdown" />
-            </button>
-          </div>
-        </article>
-        {mappedComments}
-        <div className="comment__wrapper">
-          <div className="comment__input__wrapper">
-            <div className="profile-pic__wrapper" style={{ maxHeight: "24px" }}>
-              <img
-                src="/assets/coffee.png"
-                alt=""
-                className="profile__img"
-                style={{ maxHeight: "24px" }}
-              />
-            </div>
-            <form action="" onSubmit={(e) => handleCommentSubmit(e)}>
-              <input
-                type="text"
-                className="comment__input"
-                placeholder="spread some love..."
-                onChange={(e) => handleInput(e)}
-              />
-              <input
-                type="submit"
-                className="send__button"
-                style={{
-                  marginRight: "16px",
-                  fontWeight: "600",
-                  color: "var(--background)",
-                }}
-              />
-            </form>
-            send
-          </div>
+      {/* <div style={{ minHeight: "100%" }} className="relative__wrapper"> */}
+      <div className="feed-icons__wrapper">
+        <div className="icon__wrapper">
+          <MdOutlineKeyboardArrowLeft
+            onClick={() => navigate(-1)}
+            style={{ fontSize: "24px", color: "var(--background)" }}
+          />
         </div>
       </div>
+      <article className="feed__article">
+        <div className="alias-and-text__wrapper">
+          <div className="alias__wrapper">
+            <div className="profile-pic__wrapper">
+              <img src="/assets/coffee.png" alt="" className="profile__img" />
+            </div>
+            <span>{scribble?.author}</span>
+            <span className="time__wrapper">{scribbleTime}</span>
+          </div>
+          <div className="text__wrapper">{scribble?.content}</div>
+        </div>
+        <div className="votes__wrapper">
+          <button
+            onClick={() => upVote(scribble?._id)}
+            className="vote__button"
+          >
+            <img src="/assets/vectorup.png" alt="arrowup" />
+          </button>
+          <p className="vote-counter__paragraph">{scribble?.votes}</p>
+          <button
+            onClick={() => downVote(scribble?._id)}
+            className="vote__button"
+          >
+            <img src="/assets/vectordown.png" alt="arrowdown" />
+          </button>
+        </div>
+      </article>
+      {mappedComments}
+      <div className="comment__wrapper">
+        <div className="comment__input__wrapper">
+          <div className="profile-pic__wrapper" style={{ maxHeight: "24px" }}>
+            {/* <img
+              src="/assets/coffee.png"
+              alt=""
+              className="profile__img"
+              style={{ maxHeight: "24px" }}
+            /> */}
+          </div>
+          <form
+            action=""
+            onSubmit={(e) => handleCommentSubmit(e)}
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              width: "88%",
+            }}
+          >
+            <input
+              value={inputFromComment}
+              type="text"
+              className="comment__input"
+              placeholder="spread some love..."
+              onChange={(e) => handleInput(e)}
+            />
+            {/* <input
+              type="submit"
+              value="send"
+              className="send__button"
+              style={{
+                marginRight: "16px",
+                fontWeight: "600",
+                color: "var(--background)",
+              }}
+            /> */}
+            <button type="submit">
+              <MdSend />
+            </button>
+          </form>
+        </div>
+      </div>
+      {/* </div> */}
     </>
   );
 };

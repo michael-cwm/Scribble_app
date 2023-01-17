@@ -27,15 +27,14 @@ router.post("/register", async (req, res) => {
 
   UsersModel.findOne({ alias }, async (err, user) => {
     if (user) {
-      console.log("vadå user already exists?");
-      res.status(409, "alias already exists").json;
-      console.log("409 - alias already exists");
+      res.status(400).send({ message: "alias already exists" });
+      console.log("400 - alias finns redan");
     } else if (password.length <= 4) {
-      res.status(400, "password must be atleast 5 characters");
-      console.log("400");
-    } else if (password !== confirmPassword) {
-      res.status(401, "passwords don't match");
+      res.status(401).send({ message: "password too short" });
       console.log("401");
+    } else if (password !== confirmPassword) {
+      res.status(402).send({ message: "passwords dont match" });
+      console.log("402");
     } else {
       const newUser = new UsersModel({
         alias,
@@ -92,40 +91,40 @@ router.post("/register", async (req, res) => {
   // }
 });
 
-router.post("/register", (req, res) => {
-  const { alias, password, confirmPassword } = req.body;
+// router.post("/register", (req, res) => {
+//   const { alias, password, confirmPassword } = req.body;
 
-  UsersModel.findOne(alias),
-    async (err, user) => {
-      if (user) {
-        res.send(error, "username already exists");
-      } else if (password.length <= 4) {
-        res.status(401, {
-          error: "Your password must have at least 5 characters",
-        });
-      } else if (password !== confirmPassword) {
-        res.render("users/user-register", {
-          error: "Passwords don't match",
-        });
-      } else {
-        const newUser = new UsersModel({
-          alias,
-          hashedPassword: utils.hashPassword(password),
-        });
-        if (utils.validateAlias(newUser)) {
-          await newUser.save();
+//   UsersModel.findOne(alias),
+//     async (err, user) => {
+//       if (user) {
+//         res.status(400).send({ message: "Login success" });
+//       } else if (password.length <= 4) {
+//         res.status(401, {
+//           error: "Your password must have at least 5 characters",
+//         });
+//       } else if (password !== confirmPassword) {
+//         res.render("users/user-register", {
+//           error: "Passwords don't match",
+//         });
+//       } else {
+//         const newUser = new UsersModel({
+//           alias,
+//           hashedPassword: utils.hashPassword(password),
+//         });
+//         if (utils.validateAlias(newUser)) {
+//           await newUser.save();
 
-          UsersModel.findOne({ alias }, (err, user) => {
-            const userData = { userId: user._id, alias };
-            const accessToken = jwt.sign(userData, process.env.JWTSECRET);
+//           UsersModel.findOne({ alias }, (err, user) => {
+//             const userData = { userId: user._id, alias };
+//             const accessToken = jwt.sign(userData, process.env.JWTSECRET);
 
-            res.cookie("token", accessToken);
-            res.send(200);
-          });
-        }
-      }
-    };
-});
+//             res.cookie("token", accessToken);
+//             res.send(200);
+//           });
+//         }
+//       }
+//     };
+// });
 
 router.post("/login", async (req, res) => {
   console.log("tjenare mannen");

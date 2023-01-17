@@ -29,6 +29,7 @@ const Login = () => {
       .catch((error) => {
         if (error.response.status === 400) {
           setLoginFailed(true);
+          console.log("login failed");
         }
       });
   };

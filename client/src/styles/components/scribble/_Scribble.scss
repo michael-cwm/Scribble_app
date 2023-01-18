@@ -3,17 +3,13 @@
   align-items: center;
   position: sticky;
   bottom: 0;
-  // padding-bottom: 24px;
-  // position: absolute;
-  // height: 80px;
+
   background-color: var(--background);
   width: 100%;
   border: 0px solid black;
   overflow: hidden;
   outline: none;
-  // margin: 0;
   padding: 16px 0px 16px 0px;
-  // margin-bottom: 16px;
   display: flex;
   justify-content: center;
 
@@ -21,13 +17,9 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    // padding: 0px 0px 0px 16px;
     justify-content: center;
     margin: 0px 8px 0px 8px;
-    // border-radius: 8px;
     border-radius: 25px;
-    // border-bottom-left-radius: 25px;
-    // border-bottom-right-radius: 25px;
     background-color: var(--borders);
     width: 80%;
     height: 52px;
@@ -38,12 +30,9 @@
     border: none;
     outline: none;
     width: 100%;
-    // margin: 8px;
-    // background-color: var(--borders);
   }
 
   .comment__input::placeholder {
-    // opacity: 0.9;
     font-size: 14px;
   }
 }

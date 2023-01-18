@@ -10,12 +10,6 @@ import { MdAddCircle } from "react-icons/md";
 import { BsFilterCircleFill } from "react-icons/bs";
 import { CgProfile } from "react-icons/cg";
 
-// import { timeFormatter } from "../../lib/helpers";
-// import TimeForMatter from "../../services/helpers";
-// import { timeFormatter } from "../../lib/helpers";
-// import { IPost } from "../../models/IPosts";
-// import { timeFormatter } from "../../lib/helperz";
-
 interface IScribble {
   _id?: string;
   content: string;
@@ -54,24 +48,11 @@ const Feed = () => {
     }
   }, [newPost]);
 
-  // useEffect(() => {
-  //   if (scribbles.length > 0) {
-  //     setScribblesExist(true);
-  //   }
-  //   console.log(scribblesExist);
-  // }, [scribblesUpdated]);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // sätter scribbles
-    // const newScribble: IScribble = {
-    //   content: postContent,
-    //   time: Date.now().toString(),
-    //   author: "challe",
-    //   votes: 0,
-    // };
+
     const cookie = localStorage.getItem("token");
-    // setScribbles([...scribbles, newScribble]);
+
     try {
       const response = await axios.post<IScribble>(
         "http://localhost:5000/feed/posts",
@@ -88,7 +69,6 @@ const Feed = () => {
         setScribbles([...scribbles, response.data]);
         setPostContent("");
         setNewPost(false);
-        // setScribbles((prevScribbles) => [response.data, ...prevScribbles]);
         setScribblesUpdated(!scribblesUpdated);
         console.log(response);
       }
@@ -121,32 +101,12 @@ const Feed = () => {
       });
   };
 
-  //   const
-
-  //   axios.post("http://localhost:5000/feed/addvotes").then((response) => {
-  //     if (response) {
-  //       console.log("got a response from backend");
-  //     }
-  //   });
-  // };
-
-  // useEffect(() => {
-  //   axios.get<IPost[]>("http://localhost:5000/feed/posts").then((response) => {
-  //     setPosts({ ...posts, posts: response.data });
-  //     console.log(posts);
-  //   });
-  // }, []);
-
   const mappedScribbles = scribbles?.map((scribble: IScribble) => {
     const posted = timeFormatter(+scribble?.time);
 
     return (
       <>
         <div className="main-feed__wrapper">
-          {/* <Link
-            to={"/feed/scribble/" + scribble._id}
-            style={{ textDecoration: "none", color: "inherit" }}
-          > */}
           <article className="feed__article">
             <div
               className="alias-and-text__wrapper"
@@ -160,10 +120,10 @@ const Feed = () => {
                     className="profile__img"
                   />
                 </div>
-                <span>{scribble?.author}</span>
+                <span className=" ">{scribble?.author}</span>
                 <span className="time__wrapper">{posted}</span>
               </div>
-              <div className="text__wrapper">{scribble?.content}</div>
+              <div className="text__wrapper ">{scribble?.content}</div>
             </div>
             <div className="votes__wrapper">
               <button
@@ -195,13 +155,21 @@ const Feed = () => {
             <MdAddCircle
               onClick={handleNewPost}
               className="icon--styles"
-              style={{ fontSize: "30.5px" }}
+              style={{ fontSize: "30.5px", cursor: "pointer" }}
+              id="add__button"
             />
 
             <BsFilterCircleFill className="icon--styles" />
           </div>
           <div className="profile__wrapper">
-            <CgProfile className="icon--styles" />
+            <CgProfile
+              className="icon--styles"
+              style={{
+                backgroundColor: "var(--borders)",
+                color: "var(--background)",
+                borderRadius: "25px",
+              }}
+            />
           </div>
         </div>
         {newPost && (
@@ -215,14 +183,7 @@ const Feed = () => {
               <div
                 className="profile-pic__wrapper"
                 style={{ maxHeight: "24px" }}
-              >
-                {/* <img
-                src="/assets/coffee.png"
-                alt=""
-                className="profile__img"
-                style={{ maxHeight: "24px" }}
-              /> */}
-              </div>
+              ></div>
               <form
                 action=""
                 onSubmit={(e) => handleSubmit(e)}
@@ -234,51 +195,49 @@ const Feed = () => {
               >
                 <input
                   value={postContent}
+                  ref={inputRef}
                   type="text"
                   className="comment__input"
                   placeholder="spread some love..."
                   onChange={(e) => handleInput(e)}
                 />
-                {/* <input
-                type="submit"
-                value="send"
-                className="send__button"
-                style={{
-                  marginRight: "16px",
-                  fontWeight: "600",
-                  color: "var(--background)",
-                }}
-              /> */}
-                <button type="submit">
+                <button type="submit" className="feed-submit__button">
                   <MdSend />
                 </button>
               </form>
             </div>
           </div>
-          // <form
-          //   onSubmit={(e) => handleSubmit(e)}
-          //   style={{
-          //     margin: "0px 8px 0px 8px",
-          //     display: "flex",
-          //     justifyContent: "space-between",
-          //   }}
-          // >
-          //   <input
-          //     type="text"
-          //     ref={inputRef}
-          //     value={postContent}
-          //     onChange={handleInput}
-          //     className="feed-new-post__input"
-          //     placeholder="write a scribble..."
-          //     style={{ width: "350px" }}
-          //   />
-          //   <button type="submit">
-          //     <MdSend style={{ color: "var(--borders)" }} />
-          //   </button>
-          // </form>
         )}
 
         {mappedScribbles}
+        <article className="feed__article">
+          <div className="alias-and-text__wrapper">
+            <div className="alias__wrapper">
+              <div className="profile-pic__wrapper">
+                <img
+                  src="/assets/asaprocky.png"
+                  alt=""
+                  className="profile__img"
+                  style={{ height: "100%", borderRadius: "25px" }}
+                />
+              </div>
+              <span>ALIA$_Rocky</span>
+              <span className="time__wrapper">Long time ago</span>
+            </div>
+            <div className="text__wrapper">
+              Great app Michael, how do I invest?
+            </div>
+          </div>
+          <div className="votes__wrapper">
+            <button className="vote__button">
+              <MdKeyboardArrowUp />
+            </button>
+            <p className="vote-counter__paragraph">99</p>
+            <button className="vote__button">
+              <MdKeyboardArrowDown />
+            </button>
+          </div>
+        </article>
       </div>
     </>
   );

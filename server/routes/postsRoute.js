@@ -7,8 +7,6 @@ const jwt = require("jsonwebtoken");
 const router = express.Router();
 
 router.get("/posts", async (req, res) => {
-  // const getPosts = await PostModel.find();
-  // res.send(getPosts);
   const getPosts = await PostModel.find().sort({ createdAt: -1 });
   res.send(getPosts);
 });
@@ -23,9 +21,6 @@ router.post("/posts", (req, res) => {
     time: new Date(),
     author: tokenData.alias.toString(),
     votes: 0,
-
-    // ...req.body,
-    // writtenBy: "rolfpeter",
   });
   newPost.save();
   res.status(200).json({ newPost });
@@ -37,8 +32,6 @@ router.post("/upvote/:id", async (req, res) => {
   const getScribble = await PostModel.findById({ _id: scribbleId });
 
   let scribbleVotes = getScribble.votes;
-
-  // console.log(scribbleVotes);
 
   const theScribble = await PostModel.findOneAndUpdate(
     { _id: scribbleId },
@@ -70,9 +63,6 @@ router.post("/downvote/comment/:id", async (req, res) => {
 
   const getComments = await PostModel.findOne({ "comments._id": commentId });
 
-  // console.log(getComments.comments[1].content);
-  // console.log(getComments?.comments[0]?.content);
-
   getComments.comments.forEach((comment) => {
     if (comment._id.toString() === commentId) {
       comment.votes--;
@@ -83,8 +73,6 @@ router.post("/downvote/comment/:id", async (req, res) => {
   getComments.save();
 
   res.status(200).json(getComments);
-
-  // getCommentId.save();
 });
 
 router.post("/upvote/comment/:id", async (req, res) => {
@@ -126,11 +114,6 @@ router.post("/posts/comment/:id", async (req, res) => {
 
   commentObject.author = tokenData.alias;
 
-  // const scribble = await PostModel.findByIdAndUpdate(
-  //   { _id: scribbleId },
-  //   { $set: { comments: commentObject } }
-  // );
-
   const scribble = await PostModel.findById({ _id: scribbleId });
 
   scribble.comments.push(commentObject);
@@ -142,19 +125,5 @@ router.post("/posts/comment/:id", async (req, res) => {
     res.status(200).json(scribble);
   }
 });
-
-// router.post("/downvote/comment/:id", async (req, res) => {
-//   const commentId = req.params.id;
-
-//   await PostModel.find({ "comments._id": commentId }, (err, posts) => {
-//     posts.forEach((post) => {
-//       post.comments.forEach((comment) => {
-//         if (comment._id.toString() === commentId) {
-//           console.log("tjenare manne");
-//         }
-//       });
-//     });
-//   });
-// });
 
 module.exports = router;

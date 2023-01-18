@@ -13,13 +13,13 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
-  width: 311px;
+  // width: 311px;
 
   button,
   .input-field {
     height: 51px;
-    // width: 100%;
-    width: 327px;
+    width: 100%;
+    // width: 327px;
     background-color: var(--borders);
     border: none;
     padding: 0px;
@@ -35,7 +35,8 @@
   }
 
   button {
-    width: 327px;
+    // width: 327px;
+    width: 100%;
     background-color: var(--main);
     font-weight: bold;
     font-size: 16px;
@@ -56,8 +57,3 @@
   font-weight: bold;
   text-align: center;
 }
-
-// input:focus::-webkit-input-placeholder {
-//   color: var(--background);
-//   opacity: 0.5;
-// }

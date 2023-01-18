@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FormEvent, useState } from "react";
+import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { json } from "stream/consumers";
@@ -47,27 +47,6 @@ const CreateAccount = () => {
           setPasswordsDontMatch(true);
         }
       });
-    // console.log("hej");
-
-    // await axios
-    //   .post("http://localhost:5000/users/register", {
-    //     ...values,
-    //   })
-    //   .then((response) => {
-    //     console.log(response);
-    //   });
-    // console.log("test");
-
-    // console.log("reså", { response });
-    // if (response.status === 400) {
-    //   console.log("jag heter ernst");
-    // }
-    // if (response.status === 200) {
-    //   // console.log(response);
-    //   localStorage.setItem("token", response.data.token);
-    //   navigate("/feed");
-    // }
-    // console.log("status: ", response.status);
   };
 
   return (

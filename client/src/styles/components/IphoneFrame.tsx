@@ -3,15 +3,12 @@ import React from "react";
 export const IphoneFrame = ({ children }): any => {
   return (
     <div className="grid min-h-screen bg-purple-50 place-items-center bg-[#121212]">
-      {/* <!-- The iPhone shell --> */}
-      <div className="mx-auto h-[750px] w-[391px] bg-[var(--background)] rounded-[60px]  border-black relative overflow-hidden ring ring-white shadow-xl overflow-scroll scrollbar-hidden scrollbar-hide">
-        <div className="absolute top-0 inset-x-0">
-          <div className="mx-auto bg-black h-6 w-40 rounded-b-3xl"></div>
+      <div className="mx-auto h-[750px] w-[391px]  bg-[var(--background)] rounded-[60px]  border-[14px] border-black relative overflow-hidden ring-1 ring-white shadow-xl overflow-scroll scrollbar-hidden scrollbar-hide">
+        <div className="absolute  top-0 inset-x-0">
+          <div className="mx-auto bg-black ml-[100px] h-6 w-40 mt-[-2px] rounded-b-3xl fixed z-10"></div>
         </div>
-        {/* <div className="relative" style={{ height: "100%" }}> */}
-        {/* <!-- Small icons on top right --> */}
         <div
-          className="mr-5 mt-2 flex justify-end space-x-1"
+          className="mr-5 mt-2 flex justify-end space-x-1 fixed  pl-[280px]"
           style={{ marginRight: "2.25rem" }}
         >
           <svg
@@ -44,17 +41,11 @@ export const IphoneFrame = ({ children }): any => {
             <path d="M3 4a1 1 0 00-1 1v10a1 1 0 001 1h1.05a2.5 2.5 0 014.9 0H10a1 1 0 001-1V5a1 1 0 00-1-1H3zM14 7a1 1 0 00-1 1v6.05A2.5 2.5 0 0115.95 16H17a1 1 0 001-1v-5a1 1 0 00-.293-.707l-2-2A1 1 0 0015 7h-1z" />
           </svg>
         </div>
-        {/* <div className="h-0.5 w-10 mt-1.5 mr-7 bg-white rounded ml-auto"></div> */}
-        {/* <!-- Notification Summary --> */}
-        {/* <div className="relative mt-4 mx-2"> */}
-        {/* <!-- Stacked panels (sitting below) --> */}
 
-        {/* <!-- Main, current panel --> */}
-        {/* <div style={{ position: "relative" }}>{children}</div>
-         */}
         {children}
-        {/* </div> */}
-        {/* </div> */}
+        <div className="fixed mb-14 bottom-2 inset-x-0">
+          <div className="mx-auto h-1 w-28 rounded bg-white"></div>
+        </div>
       </div>
     </div>
   );

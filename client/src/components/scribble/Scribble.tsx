@@ -6,6 +6,8 @@ import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { MdSend } from "react-icons/md";
 import { timeFormatter } from "../../helpers/helpers";
+import { MdKeyboardArrowUp } from "react-icons/md";
+import { MdKeyboardArrowDown } from "react-icons/md";
 
 const Scribble = () => {
   const [scribble, setScribble] = useState<IScribble>();
@@ -21,7 +23,6 @@ const Scribble = () => {
       .get("http://localhost:5000/feed/posts/" + scribbleId.id)
       .then((response) => {
         if (response) {
-          // setScribbleUpdated(!scribbleUpdated);
           setScribble(response.data);
           setScribbleComments(response.data.comments);
         }
@@ -109,13 +110,14 @@ const Scribble = () => {
   const mappedComments = scribbleComments?.map((comment) => {
     const posted = timeFormatter(+comment.time);
 
+    console.log(comment);
+
     return (
       <article
         className="feed__article"
         style={{
           marginLeft: "24px",
-          backgroundColor: "var(--borders)",
-          paddingRight: "16px",
+          backgroundColor: "var(--background)",
         }}
       >
         <div className="alias-and-text__wrapper">
@@ -124,26 +126,23 @@ const Scribble = () => {
               <img src="/assets/coffee.png" alt="" className="profile__img" />
             </div>
             <span>{comment?.author}</span>
-            <span className="time__wrapper">{posted}</span>
+            <span className="time__wrapper">0m ago</span>
           </div>
           <div className="text__wrapper">{comment?.content}</div>
         </div>
-        <div
-          className="votes__wrapper"
-          style={{ width: "100%", margin: "16px" }}
-        >
+        <div className="votes__wrapper">
           <button
             className="vote__button"
             onClick={() => upVoteComment(comment)}
           >
-            <img src="/assets/vectorup.png" alt="arrowup" />
+            <MdKeyboardArrowUp />
           </button>
           <p className="vote-counter__paragraph">{comment?.votes}</p>
           <button
             className="vote__button"
             onClick={() => downVoteComment(comment)}
           >
-            <img src="/assets/vectordown.png" alt="arrowdown" />
+            <MdKeyboardArrowDown />
           </button>
         </div>
       </article>
@@ -152,9 +151,11 @@ const Scribble = () => {
 
   return (
     <>
-      {/* <div style={{ minHeight: "100%" }} className="relative__wrapper"> */}
       <div className="feed-icons__wrapper">
-        <div className="icon__wrapper">
+        <div
+          className="icon__wrapper"
+          style={{ backgroundColor: "var(--borders)" }}
+        >
           <MdOutlineKeyboardArrowLeft
             onClick={() => navigate(-1)}
             style={{ fontSize: "24px", color: "var(--background)" }}
@@ -177,28 +178,24 @@ const Scribble = () => {
             onClick={() => upVote(scribble?._id)}
             className="vote__button"
           >
-            <img src="/assets/vectorup.png" alt="arrowup" />
+            <MdKeyboardArrowUp />
           </button>
           <p className="vote-counter__paragraph">{scribble?.votes}</p>
           <button
             onClick={() => downVote(scribble?._id)}
             className="vote__button"
           >
-            <img src="/assets/vectordown.png" alt="arrowdown" />
+            <MdKeyboardArrowDown />
           </button>
         </div>
       </article>
       {mappedComments}
       <div className="comment__wrapper">
         <div className="comment__input__wrapper">
-          <div className="profile-pic__wrapper" style={{ maxHeight: "24px" }}>
-            {/* <img
-              src="/assets/coffee.png"
-              alt=""
-              className="profile__img"
-              style={{ maxHeight: "24px" }}
-            /> */}
-          </div>
+          <div
+            className="profile-pic__wrapper"
+            style={{ maxHeight: "24px" }}
+          ></div>
           <form
             action=""
             onSubmit={(e) => handleCommentSubmit(e)}
@@ -215,23 +212,12 @@ const Scribble = () => {
               placeholder="spread some love..."
               onChange={(e) => handleInput(e)}
             />
-            {/* <input
-              type="submit"
-              value="send"
-              className="send__button"
-              style={{
-                marginRight: "16px",
-                fontWeight: "600",
-                color: "var(--background)",
-              }}
-            /> */}
-            <button type="submit">
+            <button type="submit" className="feed-submit__button">
               <MdSend />
             </button>
           </form>
         </div>
       </div>
-      {/* </div> */}
     </>
   );
 };
